@@ -145,7 +145,7 @@
       <div class="sc-wrap" id="w-chips"></div>
     </div>
     <textarea id="user-text" placeholder="지금 떠오르는 말을 그대로 써주세요. 어떤 이야기든 여기서는 안전합니다." oninput="onType()"></textarea>
-    <div class="cc"><span id="cn">0</span>자</div>
+    <div class="cc"><span id="cn">0</span>자 <span id="cc-hint" style="color:#b0a89e;font-size:11px;">· 20자 이상 써주시면 다음으로 넘어갈 수 있어요</span></div>
     <button class="nbtn" id="nbtn" disabled onclick="goResult()">다음으로 →</button>
     <button class="bbtn" onclick="show('s1','s2')">← 영역 다시 선택하기</button>
   </div>
@@ -193,7 +193,7 @@ const D={
 };
 let topic='';
 function goWrite(n){topic=n;const d=D[n];document.getElementById('w-tag').textContent=n;document.getElementById('w-eg').textContent=d.eg;document.getElementById('w-chips').innerHTML=d.chips.map(s=>'<span class="sc">'+s+'</span>').join('');document.getElementById('user-text').value='';document.getElementById('cn').textContent='0';document.getElementById('nbtn').disabled=true;document.getElementById('s2').style.background=d.bg;show('s2','s1');}
-function onType(){const v=document.getElementById('user-text').value;document.getElementById('cn').textContent=v.length;document.getElementById('nbtn').disabled=v.trim().length<20;}
+function onType(){const v=document.getElementById('user-text').value;const len=v.trim().length;document.getElementById('cn').textContent=v.length;document.getElementById('nbtn').disabled=len<20;document.getElementById('cc-hint').style.display=len>=20?'none':'inline';}
 function goResult(){const d=D[topic];if(!d)return;const txt=document.getElementById('user-text').value.trim();const echo=txt.length>90?txt.slice(0,90)+'\u2026':txt;document.getElementById('r-tag').textContent=topic;document.getElementById('r-title').textContent=d.title;document.getElementById('r-echo').textContent='\u201c'+echo+'\u201d';document.getElementById('r-emsg').textContent=d.emsg;document.getElementById('r-quote').textContent=d.quote;document.getElementById('r-brunch').innerHTML=d.brunch.map(b=>'<a class="blink" href="'+b.u+'" target="_blank" rel="noopener"><span class="bicon">'+b.i+'</span><span class="binfo"><span class="btitle">'+b.t+'</span><span class="bsub">'+b.s+'</span></span><span class="barr">→</span></a>').join('');show('s3','s2');}
 function show(on,off){document.getElementById(off).classList.remove('active');document.getElementById(on).classList.add('active');}
 </script>
